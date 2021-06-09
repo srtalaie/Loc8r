@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('./locations');
 
 const dbURI = process.env.MONGODB_URI || "mongodb://localhost/Loc8r";
-mongoose.connect(dbURI, {useNewUrlParser: true});
+mongoose.connect(dbURI, {useNewUrlParser: true}, { useUnifiedTopology: true });
 
 
 mongoose.connection.on('connected', () => {
