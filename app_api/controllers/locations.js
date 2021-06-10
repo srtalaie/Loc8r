@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Loc = mongoose.model('Location')
+const Loc = mongoose.model('Location');
 
 const locationsListByDistance = (req, res) => {};
 
@@ -17,7 +17,7 @@ const locationsReadOne = (req, res) => {
                     });
             } else if (err) {
                 return res
-                    .status(404)
+                    .status(400)
                     .json(err);
             }
             res
