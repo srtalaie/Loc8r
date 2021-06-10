@@ -1,3 +1,6 @@
+const mongoose = require('mongoose');
+const Loc = mongoose.model('Location')
+
 const locationsListByDistance = (req, res) => {};
 
 const locationsCreate = (req, res) => {};
