@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Loc = mongoose.model('Location');
 
+
+//Routes
 const locationsListByDistance = async(req, res) => {
     const lng = parseFloat(req.query.lng);
     const lat = parseFloat(req.query.lat);
