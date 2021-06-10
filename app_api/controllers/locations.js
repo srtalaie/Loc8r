@@ -37,7 +37,9 @@ const locationsListByDistance = async(req, res) => {
             .status(200)
             .json(locations);
     } catch (err) {
-        console.log(err);
+        res
+            .status(404)
+            .json(err)
     }
 };
 
