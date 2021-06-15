@@ -52,7 +52,7 @@ const doSetAverageRating = (location) => {
 
 const updatedAverageRating = (locationId) => {
     Loc.findById(locationId)
-        .select('rating review')
+        .select('rating reviews')
         .exec((err, location) => {
             if (!err) {
                 doSetAverageRating(location);
