@@ -6,6 +6,19 @@
      apiOptions.server = 'https://shrouded-woodland-18552.herokuapp.com/'
  }
 
+const formatDistance = (distance) => {
+    let thisDistance = 0;
+    let formattedDistance = distance.slice(0, -1);
+    let unit = 'm';
+    if (formattedDistance > 1000) {
+        thisDistance = parseFloat(formattedDistance / 1000).toFixed();
+        unit = 'km';
+    } else {
+        thisDistance = Math.floor(formattedDistance);
+    }
+    return thisDistance + unit;
+}
+
 const renderHomepage = (req, res, responseBody) => {
     res.render('locations-list', {
         title: 'Loc8r -  find a place to work with wifi',
@@ -32,7 +45,12 @@ const homelist = (req, res) => {
     };
     request(
         requestOptions, (err, response, body) => {
-            renderHomepage(req, res, body);
+            let data = [];
+            data = body.map( (item) => {
+                item.distance = formatDistance(item.distance);
+                return item;
+            });
+            renderHomepage(req, res, data);
         }
     );
 }
