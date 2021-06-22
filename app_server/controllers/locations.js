@@ -8,25 +8,34 @@
 
 const formatDistance = (distance) => {
     let thisDistance = 0;
-    let formattedDistance = distance.slice(0, -1);
     let unit = 'm';
-    if (formattedDistance > 1000) {
-        thisDistance = parseFloat(formattedDistance / 1000).toFixed();
+    if (distance > 1000) {
+        thisDistance = parseFloat(distance / 1000).toFixed();
         unit = 'km';
     } else {
-        thisDistance = Math.floor(formattedDistance);
+        thisDistance = Math.floor(distance);
     }
     return thisDistance + unit;
 }
 
 const renderHomepage = (req, res, responseBody) => {
+    let message = null;
+    if (!(responseBody instanceof Array)) {
+        message = "API lookup error";
+        responseBody = [];
+    } else {
+        if (!responseBody.length) {
+            message = "No places found nearby"
+        }
+    }
     res.render('locations-list', {
         title: 'Loc8r -  find a place to work with wifi',
         pageHeader: {
             title: 'Loc8r',
             strapline: 'Findplaces to work with wifi near you!'
         },
-        locations: responseBody
+        locations: responseBody,
+        message
     });
 }
 
@@ -44,12 +53,14 @@ const homelist = (req, res) => {
         }
     };
     request(
-        requestOptions, (err, response, body) => {
+        requestOptions, (err, {statusCode}, body) => {
             let data = [];
-            data = body.map( (item) => {
-                item.distance = formatDistance(item.distance);
-                return item;
-            });
+            if (statusCode === 200 && body.length) {
+                data = body.map( (item) => {
+                    item.distance = formatDistance(item.distance);
+                    return item;
+                });
+            }
             renderHomepage(req, res, data);
         }
     );

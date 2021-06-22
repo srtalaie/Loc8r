@@ -6,10 +6,11 @@ const Loc = mongoose.model('Location');
 const locationsListByDistance = async(req, res) => {
     const lng = parseFloat(req.query.lng);
     const lat = parseFloat(req.query.lat);
-    const  near = {
+    const near = {
         type: "Point",
         coordinates: [lng, lat]
     };
+    
     const geoOptions = {
         distanceField: "distance.calculated",
         spherical: true,
@@ -32,7 +33,7 @@ const locationsListByDistance = async(req, res) => {
                 address: result.address,
                 rating: result.rating,
                 facilities: result.facilities,
-                distance: `${result.distance.calculated.toFixed()}m`
+                distance: `${result.distance.calculated.toFixed()}`
             }
         });
         return res
