@@ -39,6 +39,20 @@ const renderHomepage = (req, res, responseBody) => {
     });
 }
 
+const renderDetailPage = (req, res, location) => {
+    res.render('location-info', {
+        title: location.name,
+        pageHeader: {
+            title: location.name
+        },
+        sidebar: {
+            context: 'is on Loc8r because it has accessible wifi and space to sit down with your laptop and get some work done.',
+            callToAction: "If you've been and you like it - or if you don't - please leave a review to help other people just like you."
+        },
+        location
+    });
+}
+
 /* GET 'home' page */
 const homelist = (req, res) => {
     const path = '/api/locations';
@@ -68,52 +82,23 @@ const homelist = (req, res) => {
 
 /* GET 'Location info' page */
 const locationInfo = (req, res) => {
-    res.render('location-info', { 
-        title: 'Dumb Starbucks',
-        pageHeader: {title: 'Dumb Starbucks'},
-        sidebar: {
-            context: 'is on Loc8r because it has accessible wifi and space to sit down with your laptop and get some work done.',
-            callToAction: 'If you\'ve been and you like it -  or if you don\'t ¯\_(ツ)_/¯ - please leave a review to jelp other people just like you.'
-        },
-        location: {
-            name: 'Dumb Starbucks',
-            address: '125 High Street, Reading, RG6 1PS',
-            rating: 3,
-            facilities: ['Hot drinks', 'Food', 'Premium wifi'],
-            openingTimes: [
-                {
-                    days: 'Monday - Friday',
-                    opening: '7:00am',
-                    closing: '7:00pm',
-                    closed: false
-                },
-                {
-                    days: 'Saturday',
-                    opening: '8:00am',
-                    closing: '5:00pm',
-                    closed: false
-                },
-                {
-                    days: 'Sunday',
-                    closed: true
-                }
-            ],
-            reviews: [
-                {
-                    author: 'Simon Holmes',
-                    rating: 5,
-                    timestamp: '16 July 2013',
-                    reviewText: 'What a great place. I can\'t say enough good things about it.'
-                },
-                {
-                    author: 'Chorley Chaplin',
-                    rating: 3,
-                    timestamp: '16 June 2013',
-                    reviewText: 'It was okay. Coffee wasn\'t great but the wifi was fast.'
-                }
-            ]
+    const path = `/api/locations/${req.params.locationid}`;
+    const requestOptions = {
+        url: `${apiOptions.server}${path}`,
+        method: 'GET',
+        json: {}
+    };
+    request(
+        requestOptions,
+        (err, response, body) => {
+            const data = body;
+            data.coords = {
+                lng: body.coords[0],
+                lat: body.coords[1]
+            };
+            renderDetailPage(req, res, data);
         }
-    });
+    );
 }
 
 /* GET 'Add review' page */
