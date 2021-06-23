@@ -90,15 +90,36 @@ const locationInfo = (req, res) => {
     };
     request(
         requestOptions,
-        (err, response, body) => {
+        (err, {statusCode}, body) => {
             const data = body;
-            data.coords = {
-                lng: body.coords[0],
-                lat: body.coords[1]
-            };
-            renderDetailPage(req, res, data);
+            if (statusCode === 200) {
+                data.coords = {
+                    lng: body.coords[0],
+                    lat: body.coords[1]
+                };
+                renderDetailPage(req, res, data);
+            } else {
+                showError(req, res, statusCode);
+            }
         }
     );
+}
+
+const showError = (req, res, status) => {
+    let title = '';
+    let content = '';
+    if (status === 404) {
+        title = '404, page not found';
+        content = 'Oh dear. Looks like you can\'t find this page. Sowwy.';
+    } else {
+        title = `${status}, something's gone wrong`;
+        content = 'Something, somwhere, has gone just a wittle bit wrong.';
+    }
+    res.status(status);
+    res.render('generic-text', {
+        title,
+        content
+    });
 }
 
 /* GET 'Add review' page */
