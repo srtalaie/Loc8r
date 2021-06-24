@@ -2,6 +2,7 @@
  const apiOptions = {
     server: 'http://localhost:3000'
  };
+
  if (process.env.NODE_ENV === 'production') {
      apiOptions.server = 'https://shrouded-woodland-18552.herokuapp.com/'
  }
@@ -53,6 +54,13 @@ const renderDetailPage = (req, res, location) => {
     });
 }
 
+const renderReviewForm = (req, res, {name}) => {
+    res.render('location-review-form', {
+        title: `Review ${name} on Loc8r`,
+        pageHeader: {title: `Review ${name}`}
+    });
+}
+
 /* GET 'home' page */
 const homelist = (req, res) => {
     const path = '/api/locations';
@@ -82,22 +90,36 @@ const homelist = (req, res) => {
 
 /* GET 'Location info' page */
 const locationInfo = (req, res) => {
-    const path = `/api/locations/${req.params.locationid}`;
+    getLocationInfo(req, res, 
+        (req, res, responseData) => renderDetailPage(req, res, responseData)
+    );
+}
+
+/* GET 'Add review' page */
+const addReview = (req, res) => {
+    getLocationInfo(req, res, 
+        (req, res, responseData) => renderReviewForm(req, res, responseData)
+    );
+}
+
+const doAddReview = (req, res) => {
+    const locationid = req.params.locationid;
+    const path = `/api/locations/${locationid}/reviews`;
+    const postdata = {
+        author: req.body.name,
+        rating: parseInt(req.body.rating, 10),
+        reviewText: req.body.review
+    };
     const requestOptions = {
         url: `${apiOptions.server}${path}`,
-        method: 'GET',
-        json: {}
+        method: 'POST',
+        json: postdata
     };
     request(
         requestOptions,
         (err, {statusCode}, body) => {
-            const data = body;
-            if (statusCode === 200) {
-                data.coords = {
-                    lng: body.coords[0],
-                    lat: body.coords[1]
-                };
-                renderDetailPage(req, res, data);
+            if (statusCode === 201) {
+                res.redirect(`/location/${locationid}`);
             } else {
                 showError(req, res, statusCode);
             }
@@ -122,16 +144,33 @@ const showError = (req, res, status) => {
     });
 }
 
-/* GET 'Add review' page */
-const addReview = (req, res) => {
-    res.render('location-review-form', { 
-        title: 'Review Dumb Starbucks on Loc8r',
-        pageHeader: {title: 'Review Dumb Starbucks'} 
-    });
+const getLocationInfo = (req, res, callback) => {
+    const path = `/api/locations/${req.params.locationid}`;
+    const requestOptions = {
+        url: `${apiOptions.server}${path}`,
+        method: 'GET',
+        json: {}
+    };
+    request(
+        requestOptions,
+            (err, {statusCode}, body) => {
+                let data = body;
+                if (statusCode === 200) {
+                    data.coords = {
+                        lng : body.coords[0],
+                        lat : body.coords[1]
+                    };
+                    callback(req, res, data);
+                } else {
+                    showError(req, res, statusCode);
+                }
+            }
+    );
 }
 
 module.exports = {
     homelist,
     locationInfo,
-    addReview
+    addReview,
+    doAddReview
   };
