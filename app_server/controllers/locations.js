@@ -4,7 +4,7 @@
  };
 
  if (process.env.NODE_ENV === 'production') {
-     apiOptions.server = 'https://shrouded-woodland-18552.herokuapp.com/'
+     apiOptions.server = 'https://shrouded-woodland-18552.herokuapp.com'
  }
 
 const formatDistance = (distance) => {
