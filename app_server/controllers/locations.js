@@ -57,7 +57,8 @@ const renderDetailPage = (req, res, location) => {
 const renderReviewForm = (req, res, {name}) => {
     res.render('location-review-form', {
         title: `Review ${name} on Loc8r`,
-        pageHeader: {title: `Review ${name}`}
+        pageHeader: {title: `Review ${name}`},
+        error: req.query.err
     });
 }
 
@@ -115,16 +116,22 @@ const doAddReview = (req, res) => {
         method: 'POST',
         json: postdata
     };
-    request(
-        requestOptions,
-        (err, {statusCode}, body) => {
-            if (statusCode === 201) {
-                res.redirect(`/location/${locationid}`);
-            } else {
-                showError(req, res, statusCode);
+    if (!postdata.author || !postdata.rating || !postdata.reviewText) {
+        res.redirect(`/location/${locationid}/review/new?err=val`);
+    } else {
+        request(
+            requestOptions,
+            (err, {statusCode}, {name}) => {
+                if (statusCode === 201) {
+                    res.redirect(`/location/${locationid}`);
+                } else if (statusCode === 400 && name && name === 'ValidationError') {
+                    res.redirect(`/location/${locationid}/review/new?err=val`);
+                } else {
+                    showError(req, res, statusCode);
+                }
             }
-        }
-    );
+        );
+    }
 }
 
 const showError = (req, res, status) => {
