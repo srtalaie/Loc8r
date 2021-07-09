@@ -19,14 +19,24 @@ export class HomeListComponent implements OnInit {
 
   constructor() { }
 
-  location: Location = {
-    _id: '60c932cf7020fa26e01003ed',
-    name: 'New New Cafe',
-    distance: 14.0,
-    address: 'High Street, Reading',
-    rating: 3,
-    facilities: ['hot drinks', 'food', 'power']
-  }
+  locations: Location[] = [
+    {
+      _id: '60c932cf7020fa26e01003ed',
+      name: 'New New Cafe',
+      distance: 14000.1234,
+      address: 'High Street, Reading',
+      rating: 3,
+      facilities: ['hot drinks', 'food', 'power']
+    },
+    {
+      _id: '60c932cf7020fa26e01003ed',
+      name: 'New New Cafe',
+      distance: 14000.1234,
+      address: 'High Street, Reading',
+      rating: 3,
+      facilities: ['hot drinks', 'food', 'power']
+    }
+  ]
 
   ngOnInit(): void {
   }
