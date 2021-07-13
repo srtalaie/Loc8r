@@ -11,17 +11,26 @@ block content
     .col-12.col-md-8
       .error= message 
       
-      each location in locations 
-        .card 
-          .card-block 
-            h4 
-              a(href=`/location/${location.id}`)= location.name
-              small &nbsp;
-              +outputRating(location.rating)
-              span.badge.badge-pill.badge-default.float-end= location.distance
-            p.address= location.address
-            each facility in location.facilities
-              p.facilities
-                span.badge.badge-warning= facility
+      //-New Angular Locations List
+      app-home-list
+      
+      //-Old Express Location List
+      //- each location in locations 
+      //-   .card 
+      //-     .card-block 
+      //-       h4 
+      //-         a(href=`/location/${location.id}`)= location.name
+      //-         small &nbsp;
+      //-         +outputRating(location.rating)
+      //-         span.badge.badge-pill.badge-default.float-end= location.distance
+      //-       p.address= location.address
+      //-       each facility in location.facilities
+      //-         p.facilities
+      //-           span.badge.badge-warning= facility
     .col-12.col-md-4 
       p.lead Looking for wifi and a seat? Loc8r helps you find places to work when out and about. Perhaps with coffee, cake or a pint? Let Loc8r help you find the place you're looking for.
+
+block scripts 
+  script(src='/build/runtime.9b789b21a219deaa6d26.js')
+  script(src='/build/polyfills.036858e09262dc212a2c.js')
+  script(src='/build/main.bd659c13a8255352d6d9.js')
