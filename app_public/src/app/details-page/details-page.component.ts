@@ -13,11 +13,10 @@ export class DetailsPageComponent implements OnInit {
 
   constructor(
     private loc8rDataService: Loc8rDataService,
-    private route: ActivatedRoute,
-    public newLocation: Location
+    private route: ActivatedRoute
     ) { }
 
-  
+  public newLocation!: Location;
 
   ngOnInit(): void {
     this.route.paramMap
