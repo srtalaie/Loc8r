@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { HomeListComponent } from './home-list/home-list.component';
@@ -11,6 +11,8 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HtmlLineBreaksPipe } from './html-line-breaks.pipe';
+import { LocationDetailsComponent } from './location-details/location-details.component';
+import { DetailsPageComponent } from './details-page/details-page.component';
 
 const routes: Routes = [
   {
@@ -20,6 +22,10 @@ const routes: Routes = [
   {
     path: 'about',
     component: AboutComponent
+  },
+  {  
+    path: 'location/:locationId',
+    component: DetailsPageComponent
   }
 ]
 
@@ -32,7 +38,9 @@ const routes: Routes = [
     HomepageComponent,
     PageHeaderComponent,
     SidebarComponent,
-    HtmlLineBreaksPipe
+    HtmlLineBreaksPipe,
+    LocationDetailsComponent,
+    DetailsPageComponent
   ],
   imports: [
     BrowserModule,
