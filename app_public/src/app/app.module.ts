@@ -14,6 +14,8 @@ import { HtmlLineBreaksPipe } from './html-line-breaks.pipe';
 import { LocationDetailsComponent } from './location-details/location-details.component';
 import { DetailsPageComponent } from './details-page/details-page.component';
 import { RatingStarsComponent } from './rating-stars/rating-stars.component';
+import { MostRecentFirstPipe } from './most-recent-first.pipe';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -42,12 +44,15 @@ const routes: Routes = [
     HtmlLineBreaksPipe,
     LocationDetailsComponent,
     DetailsPageComponent,
-    RatingStarsComponent
+    RatingStarsComponent,
+    MostRecentFirstPipe
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    FormsModule, 
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [FrameworkComponent]
