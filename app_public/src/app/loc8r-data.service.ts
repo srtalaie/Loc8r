@@ -1,6 +1,6 @@
 import { Injectable, NgModule } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Location } from './home-list/home-list.component';
+import { Location, Review } from './location';
 
 @Injectable({
   providedIn: 'root'
@@ -37,12 +37,12 @@ export class Loc8rDataService {
       .catch(this.handleError)
   }
 
-  public addReviewByLocationId(locationId: string, formData: any): Promise<any>{
+  public addReviewByLocationId(locationId: string, formData: Review): Promise<Review>{
     const url: string = `${this.apiBaseUrl}/locations/${locationId}/reviews`;
     return this.http
       .post(url, formData)
       .toPromise()
-      .then(response => response as any)
+      .then(response => response as Review)
       .catch(this.handleError);
   }
 }
