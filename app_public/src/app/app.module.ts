@@ -1,6 +1,8 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { AppRoutingModule } from './app-routing/app-routing.module';
+
 import { HomeListComponent } from './home-list/home-list.component';
 import { DistancePipe } from './distance.pipe';
 import { HttpClientModule } from '@angular/common/http';
@@ -16,21 +18,6 @@ import { DetailsPageComponent } from './details-page/details-page.component';
 import { RatingStarsComponent } from './rating-stars/rating-stars.component';
 import { MostRecentFirstPipe } from './most-recent-first.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-const routes: Routes = [
-  {
-    path: '',
-    component: HomepageComponent
-  },
-  {
-    path: 'about',
-    component: AboutComponent
-  },
-  {  
-    path: 'location/:locationId',
-    component: DetailsPageComponent
-  }
-]
 
 @NgModule({
   declarations: [
@@ -50,9 +37,9 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(routes),
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [FrameworkComponent]
