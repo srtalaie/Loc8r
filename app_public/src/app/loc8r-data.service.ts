@@ -1,6 +1,7 @@
 import { Injectable, NgModule } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Location, Review } from './location';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class Loc8rDataService {
 
   constructor(private http: HttpClient) { }
 
-  private apiBaseUrl = 'http://localhost:3000/api'
+  private apiBaseUrl = environment.apiBaseUrl;
 
   public getLocations(lat: number, lng: number): Promise<Location[]> {
     // const lng: number = -0.7992599;
