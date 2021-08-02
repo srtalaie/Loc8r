@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 require('./locations');
+require('./users');
 
 const dbURI = process.env.MONGODB_URI || "mongodb://localhost/Loc8r";
 mongoose.connect(dbURI, {useNewUrlParser: true});
