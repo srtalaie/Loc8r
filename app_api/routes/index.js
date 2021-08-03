@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const ctrlLocations = require('../controllers/locations');
 const ctrlReviews = require('../controllers/reviews');
+const ctrlAuth = require('../controllers/authentication');
+
+//Users
+router.post('/register', ctrlAuth.register);
+router.post('/login', ctrlAuth.login);
 
 //Locations
 router
