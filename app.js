@@ -52,4 +52,13 @@ app.use(function(err, req, res) {
   res.render('error');
 });
 
+//Catch unauthorized errors
+app.use((err, req, res, next) => {
+  if (err.name === 'UnauthorizedError') {
+    res
+      .status(401)
+      .json({ "message": err.name + ": " + err.message });
+  }
+});
+
 module.exports = app;
