@@ -1,16 +1,20 @@
-import { Injectable, NgModule } from '@angular/core';
+import { Injectable, Inject, NgModule } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Location, Review } from './location';
 import { environment } from '../environments/environment';
 import { User } from './user';
 import { AuthResponse } from './authresponse';
+import { BROWSER_STORAGE } from './storage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Loc8rDataService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    @Inject(BROWSER_STORAGE) private storage: Storage
+  ) { }
 
   private apiBaseUrl = environment.apiBaseUrl;
 
@@ -42,6 +46,11 @@ export class Loc8rDataService {
 
   public addReviewByLocationId(locationId: string, formData: Review): Promise<Review>{
     const url: string = `${this.apiBaseUrl}/locations/${locationId}/reviews`;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.storage.getItem('loc8r-token')}`
+      })
+    }
     return this.http
       .post(url, formData)
       .toPromise()
