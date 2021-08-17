@@ -19,6 +19,7 @@ import { RatingStarsComponent } from './rating-stars/rating-stars.component';
 import { MostRecentFirstPipe } from './most-recent-first.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { RegisterComponent } from './register/register.component';
     DetailsPageComponent,
     RatingStarsComponent,
     MostRecentFirstPipe,
-    RegisterComponent
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
