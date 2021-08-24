@@ -19,7 +19,7 @@ export class FrameworkComponent implements OnInit {
     this.authenticationService.logout();
   }
 
-  public isLoggedin(): boolean {
+  public isLoggedIn(): boolean {
     return this.authenticationService.isLoggedIn();
   }
 

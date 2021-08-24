@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 @Injectable({
@@ -22,7 +22,7 @@ export class HistoryService {
 
   constructor(private router: Router) { 
     this.router.events
-      .pipe(filter(routerEvent => routerEvent instanceof NavigationEnd))
+      .pipe(filter((routerEvent: Event): routerEvent is NavigationEnd => routerEvent instanceof NavigationEnd))
       .subscribe((routerEvent: NavigationEnd) => {
         const url = routerEvent.urlAfterRedirects;
         this.urls = [...this.urls, url]

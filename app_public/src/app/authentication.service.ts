@@ -3,6 +3,7 @@ import { BROWSER_STORAGE } from './storage';
 import { User } from './user';
 import { AuthResponse } from './authresponse';
 import { Loc8rDataService } from './loc8r-data.service';
+ 
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class AuthenticationService {
   }
 
   public saveToken(token: string): void {
+    console.log(token);
     this.storage.setItem('loc8r-token', token);
   }
 
